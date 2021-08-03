@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Chat App</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="chatIt">ChatIt</string>
+    <string name="from">From</string>
+    <string name="maurice">Maurice</string>
+    <string name="letsGetStarted">Let`s Get Started!</string>
+    <string name="createNewAcc">Create an account to chat with your friends</string>
+    <string name="create">Create</string>
+    <string name="alreadyHaveAcc">Already have an account?</string>
+    <string name="loginHere">Login here</string>
+    <string name="userName">Username</string>
+    <string name="email">E-Mail</string>
+    <string name="password">Password</string>
+    <string name="welcomeBack">Welcome Back!</string>
+    <string name="loginExistingAcc">Log in to your existing account</string>
+    <string name="login">Login</string>
+    <string name="dontHaveAnAcc">Don`t have an account?</string>
+    <string name="registerHere">Register here</string>
+    <string name="makeSureThatNoFieldIsEmpty">Make sure that no field is empty</string>
 </resources>
