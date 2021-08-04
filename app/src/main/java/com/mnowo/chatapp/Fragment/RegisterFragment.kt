@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
@@ -30,17 +31,34 @@ class RegisterFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_register, container, false)
 
         view.btn_createUser.setOnClickListener {
+            view.pb_register.isVisible = true
+            view.btn_createUser.isClickable = false
             beforeRegistration()
+        }
+
+        view.tv_toLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
 
         viewModel.status.observe(viewLifecycleOwner, Observer {
             if (it.getContentIfNotHandled()?.data == "Success") {
                 registerUser()
-                val navOptions = NavOptions.Builder().setPopUpTo(R.id.registerFragment, true).build()
-                findNavController().navigate(R.id.action_registerFragment_to_homeFragment, null, navOptions)
             } else {
                 Log.d("registration", "Failed")
                 Snackbar.make(view, R.string.makeSureThatNoFieldIsEmpty, Snackbar.LENGTH_LONG).show()
+                view.pb_register.isVisible = false
+                view.btn_createUser.isClickable = true
+            }
+        })
+
+        viewModel.isRegistered.observe(viewLifecycleOwner, Observer {
+            if(it) {
+                val navOptions = NavOptions.Builder().setPopUpTo(R.id.registerFragment, true).build()
+                findNavController().navigate(R.id.action_registerFragment_to_homeFragment, null, navOptions)
+            } else {
+                Snackbar.make(view, R.string.somethingWentWrong, Snackbar.LENGTH_LONG).show()
+                view.pb_register.isVisible = false
+                view.btn_createUser.isClickable = true
             }
         })
 
@@ -48,6 +66,7 @@ class RegisterFragment : Fragment() {
     }
 
 
+    // Checks if inputs are valid
     private fun beforeRegistration() {
         val username = view?.et_username?.text.toString()
         val email = view?.et_email?.text.toString()
@@ -59,7 +78,8 @@ class RegisterFragment : Fragment() {
     private fun registerUser() {
         val email = view?.et_email?.text.toString()
         val password = view?.et_password?.text.toString()
+        val username = view?.et_username?.text.toString()
 
-        viewModel.registerWithEmailAndPassword(email, password)
+        viewModel.registerWithEmailAndPassword(email, password, username)
     }
 }

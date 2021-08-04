@@ -34,7 +34,7 @@ class RegisterFragmentViewModelTest {
 
     @Test
     fun `empty email, returns error`() {
-        viewModel.checkInputs("", "asdf", "fsd")
+        viewModel.checkInputs("", "asdfsdfsdfsa", "fsd")
 
         val value = viewModel.status.getOrAwaitValueTest()
 
@@ -52,7 +52,7 @@ class RegisterFragmentViewModelTest {
 
     @Test
     fun `empty username, returns error`() {
-        viewModel.checkInputs("asd", "asa", "")
+        viewModel.checkInputs("asd", "asasdfsaf", "")
 
         val value = viewModel.status.getOrAwaitValueTest()
 
@@ -69,8 +69,27 @@ class RegisterFragmentViewModelTest {
     }
 
     @Test
-    fun `nothing empty, returns true`() {
-        viewModel.checkInputs("sdfs", "fsfd", "sdfsd")
+    fun `password less than seven characters, returns error`() {
+        viewModel.checkInputs("sdfsdf", "sfsfa", "fsdfds")
+
+        val value = viewModel.status.getOrAwaitValueTest()
+
+        assertThat(value.getContentIfNotHandled()?.status).isEqualTo(Status.ERROR)
+    }
+
+    @Test
+    fun `password more than seven characters, returns error`() {
+        viewModel.checkInputs("sdfsdf", "sfsfafsdfs", "fsdfds")
+
+        val value = viewModel.status.getOrAwaitValueTest()
+
+        assertThat(value.getContentIfNotHandled()?.status).isEqualTo(Status.ERROR)
+    }
+
+
+    @Test
+    fun `nothing empty and password equals 7, returns true`() {
+        viewModel.checkInputs("asdasfd", "aaaaaaa", "asdfsd")
 
         val value = viewModel.status.getOrAwaitValueTest()
 

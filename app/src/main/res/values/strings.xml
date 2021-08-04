@@ -18,4 +18,9 @@
     <string name="dontHaveAnAcc">Don`t have an account?</string>
     <string name="registerHere">Register here</string>
     <string name="makeSureThatNoFieldIsEmpty">Make sure that no field is empty</string>
+    <string name="somethingWentWrong">Something went wrong</string>
+    <string name="chats">Chats</string>
+    <string name="logout">Logout</string>
+    <string name="searchForNewFriends">Search for new friend with their custom-ID</string>
+    <string name="search">Search friends</string>
 </resources>
