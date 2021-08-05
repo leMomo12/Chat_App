@@ -55,4 +55,28 @@ class Firebase @Inject constructor() {
             d("register", "Exception adding to firebase $e")
         }
     }
+
+    suspend fun searchUser(customId: String) : MutableList<User> {
+        var searchResultList: MutableList<User> = mutableListOf()
+        try {
+            db.collection(customId)
+                .whereEqualTo("type", "User")
+                .whereEqualTo("customId", customId)
+                .get()
+                .addOnSuccessListener {
+                    for(document in it.documents) {
+                        val profileName = document.getString("profileName")
+                        val profilePicture = document.getString("profilePicture")
+
+                        val user = User(profileName!!, profilePicture!!, customId, "User")
+                        searchResultList.add(user)
+                    }
+                    d("Search", "Successfully")
+                }
+                .await()
+        } catch (e: Exception) {
+
+        }
+        return searchResultList
+    }
 }

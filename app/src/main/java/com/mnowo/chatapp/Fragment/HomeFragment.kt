@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.ktx.auth
+import com.mnowo.chatapp.Adapters.HomeRecyclerAdapter
 import com.mnowo.chatapp.R
 import com.mnowo.chatapp.ViewModel.HomeFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +29,17 @@ class HomeFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+
+        viewModel.getFriends()
+
+        val adapter = HomeRecyclerAdapter()
+        val recyclerview = view.rv_home
+        recyclerview.adapter = adapter
+        recyclerview.layoutManager = LinearLayoutManager(requireContext())
+
+        viewModel.friendList.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it)
+        })
 
         view.btn_logout.setOnClickListener {
             logout()

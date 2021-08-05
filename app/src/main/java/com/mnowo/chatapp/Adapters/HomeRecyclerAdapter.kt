@@ -30,7 +30,7 @@ class HomeRecyclerAdapter @Inject constructor()
         holder.itemView.tv_profileName.text = currentItem.profileName
 
         Picasso.get()
-            .load(currentItem.profilePicture)
+            .load(R.mipmap.ic_launcher_round)
             .transform(CropCircleTransformation())
             .into(holder.itemView.iv_profilePicture)
 

@@ -9,6 +9,7 @@ data class Friend(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
     var profileName: String,
-    var profilePicture: String
+    var profilePicture: String,
+    var customId: String
 
 )
